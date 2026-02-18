@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome -->
+    <script defer src="fontawesome-free-6.2.0-web/js/all.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <img src="ตราวิลัย-removebg-preview.png" alt="Logo" class="logo">
+        <h2>เข้าสู่ระบบ</h2>
+        <form action="login.php" method="POST" class="form-container">
+            <div class="input-container">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="username" placeholder="รหัสประจำตัว/เลขบัตรประชาชน" required>
+            </div>
+            <div class="input-container">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" placeholder="เลขบัตรประชาชน" required>
+            </div>
+            <button type="submit"><i class="fa-solid fa-right-to-bracket"></i>เข้าสู่ระบบ</button>
+            <a href="register.html">ยังไม่มีบัญชี? สมัครใช้งาน</a>
+        </form>
+    </div>
+</body>
+</html>

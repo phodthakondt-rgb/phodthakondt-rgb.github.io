@@ -1,0 +1,332 @@
+/* General Styles */
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+h1, h2 {
+    color: #4a86e8;
+    margin-top: 0;
+}
+
+.back-button {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+/* Main Layout */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.form-container, .map-container {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+/* Map Styles */
+#map {
+    height: 520px; /* Adjust height to better fit form */
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    cursor: crosshair;
+}
+
+/* Form Styles */
+#visit-form h2, .map-container h2, .visit-list-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+.gps-input-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.gps-input-group input {
+    flex-grow: 1;
+}
+
+.icon-btn {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #6c757d;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.icon-btn:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+
+.fetch-address-btn {
+    padding: 0 15px;
+    height: 44px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+
+.fetch-address-btn:hover {
+    background-color: #0056b3;
+}
+
+#address {
+    background-color: #e9ecef; /* Read-only look */
+    color: #495057;
+}
+
+input[type="text"], input[type="tel"], input[type="date"], textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+.image-preview {
+    display: none;
+    max-width: 150px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.submit-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 14px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+/* Visit List Styles */
+.visit-list-container {
+    margin-top: 40px;
+}
+
+.no-visits {
+    text-align: center;
+    color: #6c757d;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px dashed #ced4da;
+}
+
+.visit-card {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    display: flex;
+    gap: 20px;
+}
+
+.visit-card-image {
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+}
+
+.visit-card-content {
+    flex-grow: 1;
+}
+
+.visit-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.visit-card-header h3 {
+    margin: 0;
+    color: #007bff;
+}
+
+.visit-card-header p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    margin-left: 15px;
+}
+
+.visit-card-body p {
+    margin: 8px 0;
+    white-space: pre-wrap; /* To show newlines in address */
+}
+
+.visit-card-footer {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.map-btn, .delete-btn {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-left: 10px;
+}
+
+.map-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.map-btn:hover {
+    background-color: #117a8b;
+    transform: translateY(-1px);
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+
+    #map {
+        height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .visit-card {
+        flex-direction: column;
+    }
+    .visit-card-image {
+        width: 100%;
+        height: 200px;
+    }
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .gps-input-group {
+        flex-wrap: wrap;
+    }
+    .gps-input-group input {
+        min-width: calc(100% - 110px);
+    }
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครใช้งาน</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Removed the old Font Awesome CSS link -->
+</head>
+<body>
+    <div class="container">
+        <img src="ตราวิลัย-removebg-preview.png" alt="Logo" class="logo">
+        <h2>สมัครใช้งาน</h2>
+        <form action="register.php" method="POST" class="form-container">
+             <div class="input-container">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="fullname" placeholder="ชื่อ-นามสกุล" required>
+            </div>
+            <div class="input-container">
+                <i class="fa-solid fa-id-badge"></i>
+                <input type="text" name="student_id" placeholder="รหัสประจำตัว" required>
+            </div>
+             <div class="input-container">
+                <i class="fa-solid fa-id-card"></i>
+                <input type="text" name="national_id" placeholder="เลขบัตรประชาชน" required>
+            </div>
+            <div class="input-container">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" name="email" placeholder="อีเมล" required>
+            </div>
+            <div class="select-container">
+                 <i class="fa-solid fa-user-tie"></i>
+                <select name="position" onchange="this.classList.toggle('has-selection', this.value !== '')" required>
+                    <option value="" disabled selected>ตำแหน่ง</option>
+                    <option value="student">นักศึกษา</option>
+                    <option value="parent">ผู้ปกครอง</option>
+                    <option value="teacher">อาจารย์</option>
+                </select>
+            </div>
+            <button type="submit"><i class="fa-solid fa-user-plus"></i>ลงทะเบียน</button>
+        </form>
+    </div>
+    <!-- Added the new Font Awesome SVG/JS -->
+    <script defer src="fontawesome-free-6.2.0-web/js/all.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homeroom System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="homeroom.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-house-user"></i>
+                <h1>Homeroom System</h1>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li class="active" data-page="overview">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>ภาพรวม</span>
+                    </li>
+                    <li data-page="attendance">
+                        <i class="fa-solid fa-user-check"></i>
+                        <span>การเข้าเรียน</span>
+                    </li>
+                    <li data-page="behavior">
+                        <i class="fa-solid fa-user-pen"></i>
+                        <span>พฤติกรรม</span>
+                    </li>
+                     <li data-page="visits">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>เยี่ยมบ้าน</span>
+                    </li>
+                    <li data-page="profile">
+                        <i class="fa-solid fa-user"></i>
+                        <span>ข้อมูลส่วนตัว</span>
+                    </li>
+                     <li data-page="settings">
+                        <i class="fa-solid fa-cog"></i>
+                        <span>ตั้งค่า</span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <span id="user-avatar-initial">ก</span>
+                </div>
+                <div class="user-info">
+                    <p id="user-profile-name">กาญจน์ภูมิ รัชเวทย์</p>
+                    <span id="user-profile-id">ID: 65001214</span>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div id="notification-toast" class="toast"><!---->
+            </div>
+            <div class="main-background-overlay"></div>
+            <section id="overview" class="page active">
+                <div class="header">
+                    <div>
+                        <h2 id="dashboard-title">แดชบอร์ดภาพรวม</h2>
+                        <p id="welcome-message">ยินดีต้อนรับกลับมา, กาญจน์ภูมิ รัชเวทย์</p>
+                    </div>
+                    <button id="check-in-today-btn" class="check-in-btn">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>เช็คชื่อเข้าชั้นเรียนวันนี้</span>
+                    </button>
+                </div>
+                <div class="widgets">
+                    <div class="widget">
+                        <h3>การมาเรียน</h3>
+                        <canvas id="attendance-chart"></canvas>
+                        <div class="legend">
+                            <div><span class="dot present"></span>มาเรียน <strong>85%</strong></div>
+                            <div><span class="dot late"></span>สาย <strong>10%</strong></div>
+                            <div><span class="dot absent"></span>ขาด <strong>5%</strong></div>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <h3>คะแนนพฤติกรรม</h3>
+                        <div class="score-circle">
+                            <p>85</p>
+                            <span>เต็ม 100</span>
+                        </div>
+                        <div class="warning">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <p>คะแนนสัปดาห์นี้หักเกินกำหนด</p>
+                        </div>
+                    </div>
+                    <div class="widget">
+                        <h3>ครูที่ปรึกษา</h3>
+                        <div class="teacher-info">
+                            <img id="teacher-avatar-display" src="https://i.pravatar.cc/150?img=3" alt="Teacher Avatar">
+                            <div>
+                                <p id="teacher-name-display">ครูอรอนงค์ รักเรียน</p>
+                                <span id="teacher-title-display">ครูฝ่ายปกครอง</span>
+                            </div>
+                        </div>
+                        <div class="contact-info">
+                            <i class="fa-solid fa-phone"></i>
+                            <span id="teacher-phone-display">081-234-5678</span>
+                        </div>
+                        <button class="contact-btn">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>ส่งข้อความหาครู</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3>แนวโน้มการมาเรียน (5 เดือนล่าสุด)</h3>
+                        <span class="chart-average">เฉลี่ย: 90.8%</span>
+                    </div>
+                    <canvas id="attendance-trend-chart"></canvas>
+                </div>
+            </section>
+            <section id="attendance" class="page">
+                <div class="header">
+                     <div>
+                        <h2>ประวัติการเข้าเรียน</h2>
+                        <p id="attendance-summary-text">แสดง 20 จาก 120 รายการ</p>
+                    </div>
+                    <div class="filter-container">
+                        <input type="text" placeholder="ค้นหาวันที่..." />
+                        <button class="filter-btn">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>วันที่</th>
+                                <th>เวลาที่เข้า</th>
+                                <th>สถานะ</th>
+                                <th>หมายเหตุ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendance-table-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button><i class="fa-solid fa-arrow-left"></i> ก่อนหน้า</button>
+                    <button>ถัดไป <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </section>
+            <section id="behavior" class="page">
+                <div class="header">
+                    <div>
+                        <h2>บันทึกพฤติกรรม</h2>
+                        <p>ภาพรวมคะแนนความประพฤติและรายการล่าสุด</p>
+                    </div>
+                    <button class="grade-btn">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                        <span>เกรดความประพฤติ: A</span>
+                    </button>
+                </div>
+                <div class="score-summary">
+                    <div class="score-card positive-card">
+                         <div class="score-icon positive">
+                           <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="score-details">
+                            <p>คะแนนบวกสะสม</p>
+                            <span>+15 คะแนน</span>
+                        </div>
+                    </div>
+                    <div class="score-card negative-card">
+                        <div class="score-icon negative">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="score-details">
+                            <p>คะแนนหักสะสม</p>
+                            <span>-15 คะแนน</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="behavior-list">
+                    <h3>รายการประจำสัปดาห์</h3>
+                    <ul>
+                        <li>
+                            <div class="behavior-icon negative">
+                                <i class="fa-solid fa-minus"></i>
+                            </div>
+                            <div class="behavior-details">
+                                <p>มาสายเกินเวลา</p>
+                                <span>เข้าแถวไม่ทันเคารพธงชาติ</span>
+                            </div>
+                            <small class="behavior-date">05/02/2026</small>
+                            <span class="score negative">-5</span>
+                        </li>
+                        <li>
+                            <div class="behavior-icon positive">
+                                <i class="fa-solid fa-plus"></i>
+                            </div>
+                            <div class="behavior-details">
+                                <p>ช่วยเหลือกิจกรรมโรงเรียน</p>
+                                <span>ช่วยงานวันเปิดบ้าน (Open House)</span>
+                            </div>
+                            <small class="behavior-date">01/02/2026</small>
+                            <span class="score positive">+10</span>
+                        </li>
+                        <li>
+                           <div class="behavior-icon negative">
+                                <i class="fa-solid fa-minus"></i>
+                            </div>
+                            <div class="behavior-details">
+                                <p>ไม่ส่งงานตามกำหนด</p>
+                                <span>วิชาคณิตศาสตร์เพิ่มเติม</span>
+                            </div>
+                            <small class="behavior-date">25/01/2026</small>
+                            <span class="score negative">-10</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section id="visits" class="page">
+                <div class="header">
+                    <h2>แผนที่การเยี่ยมบ้าน</h2>
+                    <p>ดูหมุดที่บันทึกไว้ คลิกบนแผนที่เพื่อเพิ่มตำแหน่งใหม่ หรือคลิกที่รายการเพื่อดูตำแหน่ง</p>
+                </div>
+                <div class="visits-layout">
+                    <div id="visits-main-map" class="main-map-container">
+                        <!-- Leaflet map will render here -->
+                    </div>
+                    <div class="visits-sidebar">
+                        <div class="visit-form-card">
+                            <h3><i class="fa-solid fa-plus-circle"></i> เพิ่มบันทึกใหม่</h3>
+                            <form id="visit-form">
+                                <div class="form-group">
+                                    <label for="visit-date">วันที่เยี่ยม</label>
+                                    <input type="date" id="visit-date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="visit-teacher-name">ชื่อครู</label>
+                                    <input type="text" id="visit-teacher-name" placeholder="เช่น ครูอรอนงค์ รักเรียน" required>
+                                </div>
+                                <div class="form-group form-group-full">
+                                    <label for="visit-notes">สรุปผลและข้อคิดเห็น</label>
+                                    <textarea id="visit-notes" rows="3" placeholder="เช่น พูดคุยกับผู้ปกครอง..."></textarea>
+                                </div>
+                                <div class="form-group form-group-full">
+                                    <label for="visit-gps-coords">พิกัด GPS</label>
+                                    <div class="gps-input-group">
+                                        <input type="text" id="visit-gps-coords" placeholder="คลิกบนแผนที่เพื่อตั้งค่า" required>
+                                        <button type="button" id="get-current-location-btn" title="ใช้ตำแหน่งปัจจุบัน"><i class="fa-solid fa-location-crosshairs"></i></button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="submit-visit-btn"><i class="fa-solid fa-save"></i> บันทึกข้อมูล</button>
+                            </form>
+                        </div>
+                        <div class="visit-log-card">
+                             <h3><i class="fa-solid fa-list-alt"></i> ประวัติการเยี่ยมบ้าน</h3>
+                             <div id="visit-log-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="profile" class="page">
+                 <div class="profile-container">
+                     <header>
+                         <div class="profile-header">
+                             <div class="avatar-container">
+                                 <img src="https://i.pravatar.cc/150?img=12" alt="Student Avatar" class="profile-avatar">
+                                 <button class="edit-avatar-btn"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <div class="profile-info">
+                                 <h1 id="student-name-profile" contenteditable="false"></h1>
+                                 <p><span id="student-education-level-profile"></span> • เลขประจำตัว: <span id="student-id-profile"></span></p>
+                             </div>
+                         </div>
+                     </header>
+
+                     <main>
+                         <section class="about-me">
+                             <div class="section-header">
+                                 <h2>เกี่ยวกับฉัน</h2>
+                                 <button class="edit-section-btn" data-section="about-me-content"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <p id="about-me-content" contenteditable="false"></p>
+                         </section>
+
+                         <section class="info-grid">
+                             <div class="info-card">
+                                 <div class="info-icon"><i class="fas fa-school"></i></div>
+                                 <div class="info-text">
+                                     <p>ชั้น</p>
+                                     <strong id="student-class" contenteditable="false"></strong>
+                                 </div>
+                                 <button class="edit-field-btn" data-field="student-class"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <div class="info-card">
+                                 <div class="info-icon"><i class="fas fa-book-open-reader"></i></div>
+                                 <div class="info-text">
+                                     <p>แผนก/สายการเรียน</p>
+                                     <strong id="student-major" contenteditable="false"></strong>
+                                 </div>
+                                  <button class="edit-field-btn" data-field="student-major"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <div class="info-card">
+                                 <div class="info-icon"><i class="fas fa-phone"></i></div>
+                                 <div class="info-text">
+                                     <p>เบอร์โทรศัพท์</p>
+                                     <strong id="student-phone" contenteditable="false"></strong>
+                                 </div>
+                                  <button class="edit-field-btn" data-field="student-phone"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <div class="info-card">
+                                 <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                                 <div class="info-text">
+                                     <p>อีเมล</p>
+                                     <strong id="student-email" contenteditable="false"></strong>
+                                 </div>
+                                  <button class="edit-field-btn" data-field="student-email"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <div class="info-card">
+                                 <div class="info-icon"><i class="fas fa-cake-candles"></i></div>
+                                 <div class="info-text">
+                                     <p>วันเกิด</p>
+                                     <strong id="student-birthdate" contenteditable="false"></strong>
+                                 </div>
+                                  <button class="edit-field-btn" data-field="student-birthdate"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                             <div class="info-card">
+                                 <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                 <div class="info-text">
+                                     <p>ที่อยู่</p>
+                                     <strong id="student-address" contenteditable="false"></strong>
+                                 </div>
+                                  <button class="edit-field-btn" data-field="student-address"><i class="fas fa-pencil-alt"></i></button>
+                             </div>
+                         </section>
+                     </main>
+
+                     <footer>
+                         <button class="save-profile-btn">แก้ไขข้อมูลทั้งหมด</button>
+                     </footer>
+                 </div>
+            </section>
+            <section id="settings" class="page">
+                 <div class="header">
+                    <h2>ตั้งค่าและปรับแต่ง</h2>
+                    <p>ปรับแต่งข้อมูลและหน้าตาของแอปพลิเคชัน</p>
+                </div>
+                <div class="settings-container">
+                    <div class="setting-card">
+                        <h3><i class="fa-solid fa-user-edit"></i> ข้อมูลส่วนตัว</h3>
+                        <div class="setting-item">
+                            <label for="student-name-input">ชื่อ-นามสกุล</label>
+                            <input type="text" id="student-name-input" placeholder="เช่น กาญจน์ภูมิ รัชเวทย์">
+                        </div>
+                        <div class="setting-item">
+                            <label for="student-id-input">รหัสนักเรียน</label>
+                            <input type="text" id="student-id-input" placeholder="เช่น 65001214">
+                        </div>
+                         <div class="setting-item">
+                            <label for="education-level-select">ระดับการศึกษา</label>
+                            <select id="education-level-select">
+                                <option value="ปวช.">ปวช.</option>
+                                <option value="ปวส.">ปวส.</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <h3><i class="fa-solid fa-chalkboard-teacher"></i> ข้อมูลครูที่ปรึกษา</h3>
+                         <div class="setting-item-row">
+                             <div class="teacher-details-inputs">
+                                <div class="setting-item">
+                                    <label for="teacher-name-input">ชื่อ-นามสกุลครู</label>
+                                    <input type="text" id="teacher-name-input" placeholder="เช่น ครูอรอนงค์ รักเรียน">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="teacher-title-input">ตำแหน่ง</label>
+                                    <input type="text" id="teacher-title-input" placeholder="เช่น ครูฝ่ายปกครอง">
+                                </div>
+                                <div class="setting-item">
+                                    <label for="teacher-phone-input">เบอร์โทรศัพท์</label>
+                                    <input type="text" id="teacher-phone-input" placeholder="เช่น 081-234-5678">
+                                </div>
+                            </div>
+                            <div class="teacher-avatar-setting">
+                                <label>รูปโปรไฟล์</label>
+                                <img id="teacher-avatar-preview" src="https://i.pravatar.cc/150?img=3" alt="Teacher Avatar Preview">
+                                <label for="teacher-avatar-input" class="custom-file-upload">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <span>เลือกรูปภาพ</span>
+                                </label>
+                                <input type="file" id="teacher-avatar-input" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting-card">
+                        <h3><i class="fa-solid fa-palette"></i> ปรับแต่งธีม</h3>
+                        <div class="setting-item-grid">
+                             <div class="theme-setting">
+                                <label for="primary-color-picker">สีหลัก</label>
+                                <input type="color" id="primary-color-picker">
+                            </div>
+                            <div class="theme-setting">
+                                <label for="present-color-picker">สีมาเรียน</label>
+                                <input type="color" id="present-color-picker">
+                            </div>
+                             <div class="theme-setting">
+                                <label for="late-color-picker">สีมาสาย</label>
+                                <input type="color" id="late-color-picker">
+                            </div>
+                             <div class="theme-setting">
+                                <label for="absent-color-picker">สีขาดเรียน</label>
+                                <input type="color" id="absent-color-picker">
+                            </div>
+                            <div class="theme-setting">
+                                <label for="positive-color-picker">สีคะแนนบวก</label>
+                                <input type="color" id="positive-color-picker">
+                            </div>
+                            <div class="theme-setting">
+                                <label for="negative-color-picker">สีคะแนนลบ</label>
+                                <input type="color" id="negative-color-picker">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting-card">
+                        <h3><i class="fa-solid fa-sliders-h"></i> ตั้งค่าทั่วไป</h3>
+                        <div class="setting-item switch">
+                            <label for="bg-texture-toggle">พื้นผิวพื้นหลัง</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="bg-texture-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="save-button-container">
+                     <button id="save-settings-btn" class="check-in-btn">
+                        <i class="fa-solid fa-save"></i>
+                        <span>บันทึกการตั้งค่าทั้งหมด</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Check-in Modal -->
+    <div id="checkin-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <i class="fa-solid fa-clock modal-icon"></i>
+            <h2>ยืนยันการเช็คชื่อ</h2>
+            <p>เวลาปัจจุบันคือ:</p>
+            <p id="modal-clock" class="modal-clock-display">00:00:00</p>
+            <div class="modal-buttons">
+                <button id="confirm-checkin-btn" class="check-in-btn">ยืนยัน</button>
+                <button id="cancel-checkin-btn" class="grade-btn">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlLCA=" crossorigin=""></script>
+    <script src="homeroom.js"></script>
+</body>
+</html>

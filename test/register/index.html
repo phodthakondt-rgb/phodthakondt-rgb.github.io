@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบช่วยเหลือ</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Using a reliable CDN for Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <style>
+        .admin-settings-link {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 1000;
+            font-size: 1.8em; /* Adjusted for letter */
+            font-weight: bold; /* Make the T bold */
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none; /* Remove underline */
+            transition: all 0.4s ease;
+            display: block;
+            visibility: visible;
+        }
+
+        .admin-settings-link:hover {
+            color: white;
+            transform: scale(1.1); /* Simple scale instead of rotate */
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Settings Link - Changed from icon to a letter 'T' -->
+    <a href="view_users.php" class="admin-settings-link">T</a>
+
+    <div class="container">
+        <img src="ตราวิลัย-removebg-preview.png" alt="Logo" class="logo">
+        <h1>ระบบช่วยเหลือ</h1>
+        <div class="button-group">
+            <button onclick="location.href='login.html'"><i class="fa-solid fa-chalkboard-user"></i>อาจารย์</button>
+            <button onclick="location.href='login.html'"><i class="fa-solid fa-user-graduate"></i>นักศึกษา</button>
+            <button onclick="location.href='login.html'"><i class="fa-solid fa-users"></i>ผู้ปกครอง</button>
+        </div>
+    </div>
+</body>
+</html>

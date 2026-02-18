@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Student Registration System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>ระบบทะเบียน</h1>
+            <nav>
+                <a href="index.html">สำหรับนักศึกษา</a>
+                <a href="admin.html">เจ้าหน้าที่</a>
+            </nav>
+        </header>
+        <main>
+            <div class="student-payment-container">
+                <div class="student-info-header">
+                    <div id="student-details"></div>
+                    <div id="payment-status-badge"></div>
+                </div>
+
+                <div class="payment-section">
+                    <div class="payment-details">
+                        <div class="fee-breakdown">
+                            <div>
+                                <p>ค่าเทอม</p>
+                                <strong id="tuition-fee-display"></strong>
+                            </div>
+                            <div>
+                                <p>ค่าประกัน</p>
+                                <strong id="insurance-fee-display"></strong>
+                            </div>
+                        </div>
+                        <div class="total-due">
+                            <p>ยอดรวมที่ต้องชำระ</p>
+                            <strong id="total-due-display"></strong>
+                        </div>
+                        <div class="paid-amount">
+                            <p>ชำระแล้ว</p>
+                            <strong id="paid-amount-display" class="paid"></strong>
+                        </div>
+                        
+                        <div class="payment-methods">
+                            <h4>ช่องทางการชำระเงิน</h4>
+                            <div class="qr-code">
+                                <img id="qr-code-img" src="https://i.imgur.com/example.png" alt="QR Code">
+                                <p>สแกนเพื่อจ่าย</p>
+                            </div>
+                            <div class="bank-info">
+                                <p>ชื่อบัญชี: <span id="bank-account-name"></span></p>
+                                <p>ธนาคาร: <span id="bank-name-display"></span></p>
+                                <p>เลขที่บัญชี: <span id="bank-account-number"></span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-form-section">
+                        <h4>แจ้งโอนเงิน (เต็มจำนวน)</h4>
+                        <p class="tab-description">ชำระยอดค้างชำระทั้งหมดในครั้งเดียว</p>
+                        <form id="full-payment-form" class="payment-form">
+                            <label for="full-payment-amount">จำนวนเงินที่โอน</label>
+                            <input type="number" id="full-payment-amount" required readonly>
+                            <label for="full-payment-date">วันที่โอน</label>
+                            <input type="date" id="full-payment-date" required>
+                            <label for="full-payment-slip">แนบหลักฐานการโอน (สลิป)</label>
+                            <input type="file" id="full-payment-slip" accept="image/*" required>
+                            <button type="submit" class="btn-primary">ส่งข้อมูลการชำระเงิน</button>
+                        </form>
+                        <div class="page-switcher">
+                            <a href="installment.html">หรือต้องการแบ่งชำระ (ผ่อน)?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="data.js"></script>
+    <script src="student.js"></script>
+</body>
+
+</html>
